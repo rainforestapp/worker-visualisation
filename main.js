@@ -30,7 +30,7 @@ function appendLog(logObject) {
     innerHTML+= '<td> - </td>';
   }
 
-  innerHTML+= '<td>' + logObject.attributes.title || ' - ' + '</td>';
+  innerHTML+= '<td>' + (logObject.attributes.title || ' - ') + '</td>';
   innerHTML+= '<td>' + logObject.source + '</td>';
   innerHTML+= '<td>' + transition.state_column + '</td>';
 
