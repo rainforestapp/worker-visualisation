@@ -2,8 +2,59 @@ html,body{
   padding: 0;
   margin: 0;
   height: 100%;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 .map-container{
   height: 100%;
+}
+
+.map-container li{
+  display: block;
+}
+
+.log-worker img{
+}
+
+.worker-pic{
+  display: inline-block;
+  margin-right: .5em;
+  border-radius: 5px;
+}
+
+table{
+  width: 100%;
+  height: auto;
+}
+
+td, th{
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  padding: .4em .8em;
+}
+
+td * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.result-failed{
+  background: #e81515;
+  padding: .3em;
+  color: white;
+  border-radius: 5px;
+}
+
+.result-no_result, .in_progress{
+  background: #eee;
+  padding: .3em;
+  border-radius: 5px;
+}
+
+
+.result-complete, .result-passed{
+  background: #389e0e;
+  padding: .3em;
+  color: white;
+  border-radius: 5px;
 }

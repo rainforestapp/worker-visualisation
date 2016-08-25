@@ -1,82 +1,47 @@
 var width = 960,
     height = 1160;
 
-var svg = d3.select('#container').append('svg')
-    .attr("width", width)
-    .attr("height", height);
-
 var socket = new Pusher('bee3975a41d4219bae85', {
   encrypted: true,
 });
-
-var countries = [
-  'SuriName',
-  'Turkmenistan',
-  'Austria',
-  'Poland',
-];
 
 var channel = socket.subscribe('anonymized-runs');
 channel.bind('workers', function() {
   console.log('workers', arguments);
 });
 
-channel.bind('log', function() {
-  console.log('log', arguments);
-});
+channel.bind('log', appendLog);
 
-var data = {
-};
+var $log = document.getElementById('log');
 
-var color = d3.scaleLinear()
-    .domain([0, 30])
-    .range(["blue", "green"]);
+function appendLog(logObject) {
+  var $logItem = document.createElement('tr');
+  var transition = logObject.attributes.transition;
+  var worker = logObject.attributes.worker;
+  var innerHTML = '';
+  console.log(logObject);
 
-function drawMap(world) {
-  return svg
-    .selectAll('.country')
-    .data(topojson.feature(world, world.objects.countries).features)
-    .enter()
-    .append('path')
-    .attr('class', 'country')
-    .style('fill', '#0099DC')
-    //    .transition(function() {
-    //    })
-    .style('stroke-width', '2px')
-    .style('stroke', '#fff')
-    .attr("d", d3.geoPath().projection(d3.geoEquirectangular()));
-};
+  if(worker) {
+    innerHTML+= '<td>';
+    innerHTML+= '<img class="worker-pic" src="' + worker.pic + '"/>';
+    innerHTML+= worker.name;
+    innerHTML+= '</td>';
+  } else {
+    innerHTML+= '<td> - </td>';
+  }
 
-d3.json("world.json", function(error, world) {
-  if (error) return console.error(error);
-  window.map = world;
+  innerHTML+= '<td>' + logObject.attributes.title || ' - ' + '</td>';
+  innerHTML+= '<td>' + transition.state_column + '</td>';
 
-  drawMap(world);
+  innerHTML+= '<td>';
+  innerHTML+= '<span class="result-' + transition.from + '">' + transition.from + '</span>';
+  innerHTML+= ' > ';
+  innerHTML+= '<span class="result-' + transition.to + '">' + transition.to + '</span>';
+  innerHTML+= '</td>';
 
-  //var points = svg.selectAll('.bubble');
+  $logItem.innerHTML = innerHTML;
+  $log.insertBefore($logItem, $log.firstChild);
+}
 
-  //  svg.selectAll('[data=]')
-
-  //points.data()
-
-  //  svg.append("g")
-  //    .attr("class", "bubble")
-  //    .selectAll("circle")
-  //    .data([{
-  //
-  //    }])
-  //  .enter().append("circle")
-  //    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-  //    .attr("r", function(d) { return radius(d.properties.population); });
-
-  world.objects.countries.forEach(function(country) {
-
-  });
-
-  console.log(world.objects.countries);
-});
-
-//setInterval(function() {
-//  world.objects.
-//  Math.floor(Math.random(3));
-//}, 1000):
+function render() {
+}
