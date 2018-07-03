@@ -1,9 +1,11 @@
 var width = 960,
     height = 1160;
 
-var socket = new Pusher('bee3975a41d4219bae85', {
-  encrypted: true,
-});
+var socket = new Pusher('f49316f6aa718d0622cc', {
+      wsHost: 'ws.pusherapp.com',
+      httpHost: 'sockjs.pusher.com',
+      encrypted: true
+    });
 
 var channel = socket.subscribe('anonymized-runs');
 channel.bind('workers', function() {
